@@ -1,17 +1,23 @@
 #!/bin/bash
 
-function copyFirefoxEntrypointScript()
+function generateEntrypointScript()
 {
-    for folder in $(ls -d ../FirefoxBrowser*); do
-        cp firefox_entry_point.sh ${folder}/entry_point.sh
+    PATTERN=${1}
+    BROWSER_PATH=${2}
+    for folder in $(ls -d ../${PATTERN}*); do 
+        cp entry_point.template ${folder}/entry_point.sh
+        sed -i "s#%BROWSER_PATH%#${BROWSER_PATH}#g" ${folder}/entry_point.sh
     done
 }
 
-function copyChromeEntrypointScript()
+function generateFirefoxEntrypointScript()
 {
-    for folder in $(ls -d ../ChromeBrowser*); do 
-        cp chrome_entry_point.sh ${folder}/entry_point.sh
-    done
+    generateEntrypointScript "FirefoxBrowser" "/opt/firefox/firefox"
+}
+
+function generateChromeEntrypointScript()
+{
+    generateEntrypointScript "ChromeBrowser" "/opt/google/chrome/chrome"
 }
 
 function generateFirefoxDockerfile()
@@ -102,7 +108,7 @@ fi
 
 COMMAND="${FOLDERS}-${FILES}"
 if [ ${COMMAND} = "firefox-entrypoint" ]; then
-    copyFirefoxEntrypointScript
+    generateFirefoxEntrypointScript
 elif [ ${COMMAND} = "firefox-dockerfile" ]; then
     generateFirefoxDockerfile
 elif [ ${COMMAND} = "firefox-makefile" ]; then
@@ -110,12 +116,12 @@ elif [ ${COMMAND} = "firefox-makefile" ]; then
 elif [ ${COMMAND} = "firefox-readme" ]; then
     generateFirefoxReadme
 elif [ ${COMMAND} = "firefox-all" ]; then
-    copyFirefoxEntrypointScript
+    generateFirefoxEntrypointScript
     generateFirefoxDockerfile
     generateFirefoxMakefile
     generateFirefoxReadme
 elif [ ${COMMAND} = "chrome-entrypoint" ]; then
-    copyChromeEntrypointScript
+    generateChromeEntrypointScript
 elif [ ${COMMAND} = "chrome-dockerfile" ]; then
     generateChromeDockerfile
 elif [ ${COMMAND} = "chrome-makefile" ]; then
@@ -123,13 +129,13 @@ elif [ ${COMMAND} = "chrome-makefile" ]; then
 elif [ ${COMMAND} = "chrome-readme" ]; then
     generateChromeReadme
 elif [ ${COMMAND} = "chrome-all" ]; then
-    copyChromeEntrypointScript
+    generateChromeEntrypointScript
     generateChromeDockerfile
     generateChromeMakefile
     generateChromeReadme
 elif [ ${COMMAND} = "all-entrypoint" ]; then
-    copyFirefoxEntrypointScript
-    copyChromeEntrypointScript
+    generateFirefoxEntrypointScript
+    generateChromeEntrypointScript
 elif [ ${COMMAND} = "all-dockerfile" ]; then
     generateFirefoxDockerfile
     generateChromeDockerfile
@@ -140,10 +146,10 @@ elif [ ${COMMAND} = "all-readme" ]; then
     generateFirefoxReadme
     generateChromeReadme
 else # all-all
-    copyFirefoxEntrypointScript
+    generateFirefoxEntrypointScript
     generateFirefoxDockerfile
     generateFirefoxMakefile
-    copyChromeEntrypointScript
+    generateChromeEntrypointScript
     generateChromeDockerfile
     generateChromeMakefile
     generateFirefoxReadme

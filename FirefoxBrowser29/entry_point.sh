@@ -10,7 +10,7 @@ trap shutdown SIGTERM SIGINT
 sudo -E -i -u alauda \
   DISPLAY=$DISPLAY \
   xvfb-run --server-args="$DISPLAY -screen 0 $GEOMETRY -ac +extension RANDR" \
-  /opt/firefox/firefox alauda.cn &
+  /opt/firefox/firefox --setDefaultBrowser alauda.cn &
 NODE_PID=$!
 
 for i in $(seq 1 10); do

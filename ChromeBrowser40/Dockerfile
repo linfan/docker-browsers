@@ -16,8 +16,7 @@ RUN apt-get update -qqy \
   && rm -rf /var/lib/apt/lists/* \
   && rm /pkg/google-chrome.deb
 
-RUN wget http://kr.archive.ubuntu.com/ubuntu/pool/main/u/udev/libudev0_175-0ubuntu9_amd64.deb -O /pkg/libudev0.deb \
-  && dpkg -i /pkg/libudev0.deb
+RUN wget http://kr.archive.ubuntu.com/ubuntu/pool/main/u/udev/libudev0_175-0ubuntu9_amd64.deb -O /pkg/libudev0.deb %EXTRA_COMMAND%%EXTRA_COMMAND% dpkg -i /pkg/libudev0.deb
 
 # 拷贝启动脚本
 COPY entry_point.sh /opt/bin/entry_point.sh

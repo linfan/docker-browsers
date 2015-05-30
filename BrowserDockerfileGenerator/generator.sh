@@ -62,8 +62,8 @@ function generateReadme()
     for folder in $(ls -d ../${PATTERN}*); do 
         source ${folder}/AutoGen.conf
         cp README.template ${folder}/README.md
-        sed -i "s#%BROWSER%#${BROWSER}#g" ${folder}/Makefile
-        sed -i "s#%VERSION%#${VERSION}#g" ${folder}/Makefile
+        sed -i "s#%BROWSER%#${BROWSER}#g" ${folder}/README.md
+        sed -i "s#%VERSION%#${VERSION}#g" ${folder}/README.md
     done
 }
 

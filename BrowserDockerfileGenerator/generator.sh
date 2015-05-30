@@ -35,9 +35,10 @@ function generateChromeDockerfile()
     done
 }
 
-function generateFirefoxMakefile()
+function generateMakefile()
 {
-    for folder in $(ls -d ../FirefoxBrowser*); do 
+    PATTERN=${1}
+    for folder in $(ls -d ../${PATTERN}*); do 
         source ${folder}/AutoGen.conf
         cp Makefile.template ${folder}/Makefile
         sed -i "s#%BROWSER%#${BROWSER}#g" ${folder}/Makefile
@@ -45,14 +46,35 @@ function generateFirefoxMakefile()
     done
 }
 
+function generateFirefoxMakefile()
+{
+    generateMakefile "FirefoxBrowser"
+}
+
 function generateChromeMakefile()
 {
-    for folder in $(ls -d ../ChromeBrowser*); do 
+    generateMakefile "ChromeBrowser"
+}
+
+function generateReadme()
+{
+    PATTERN=${1}
+    for folder in $(ls -d ../${PATTERN}*); do 
         source ${folder}/AutoGen.conf
-        cp Makefile.template ${folder}/Makefile
+        cp README.template ${folder}/README.md
         sed -i "s#%BROWSER%#${BROWSER}#g" ${folder}/Makefile
         sed -i "s#%VERSION%#${VERSION}#g" ${folder}/Makefile
     done
+}
+
+function generateFirefoxReadme()
+{
+    generateReadme "FirefoxBrowser"
+}
+
+function generateChromeReadme()
+{
+    generateReadme "ChromeBrowser"
 }
 
 FOLDERS=${1}
@@ -72,6 +94,8 @@ elif [ "${FILES:0:1}" = "d" ]; then
     FILES="dockerfile"
 elif [ "${FILES:0:1}" = "m" ]; then
     FILES="makefile"
+elif [ "${FILES:0:1}" = "r" ]; then
+    FILES="readme"
 else
     FILES="all"
 fi
@@ -83,20 +107,26 @@ elif [ ${COMMAND} = "firefox-dockerfile" ]; then
     generateFirefoxDockerfile
 elif [ ${COMMAND} = "firefox-makefile" ]; then
     generateFirefoxMakefile
+elif [ ${COMMAND} = "firefox-readme" ]; then
+    generateFirefoxReadme
 elif [ ${COMMAND} = "firefox-all" ]; then
     copyFirefoxEntrypointScript
     generateFirefoxDockerfile
     generateFirefoxMakefile
+    generateFirefoxReadme
 elif [ ${COMMAND} = "chrome-entrypoint" ]; then
     copyChromeEntrypointScript
 elif [ ${COMMAND} = "chrome-dockerfile" ]; then
     generateChromeDockerfile
 elif [ ${COMMAND} = "chrome-makefile" ]; then
     generateChromeMakefile
+elif [ ${COMMAND} = "chrome-readme" ]; then
+    generateChromeReadme
 elif [ ${COMMAND} = "chrome-all" ]; then
     copyChromeEntrypointScript
     generateChromeDockerfile
     generateChromeMakefile
+    generateChromeReadme
 elif [ ${COMMAND} = "all-entrypoint" ]; then
     copyFirefoxEntrypointScript
     copyChromeEntrypointScript
@@ -106,6 +136,9 @@ elif [ ${COMMAND} = "all-dockerfile" ]; then
 elif [ ${COMMAND} = "all-makefile" ]; then
     generateFirefoxMakefile
     generateChromeMakefile
+elif [ ${COMMAND} = "all-readme" ]; then
+    generateFirefoxReadme
+    generateChromeReadme
 else # all-all
     copyFirefoxEntrypointScript
     generateFirefoxDockerfile
@@ -113,5 +146,7 @@ else # all-all
     copyChromeEntrypointScript
     generateChromeDockerfile
     generateChromeMakefile
+    generateFirefoxReadme
+    generateChromeReadme
 fi
 

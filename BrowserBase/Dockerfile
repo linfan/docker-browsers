@@ -28,13 +28,17 @@ RUN /usr/share/locales/install-language-pack zh_CN \
   && dpkg-reconfigure --frontend noninteractive locales \
   && apt-get -qqy --no-install-recommends install language-pack-zh-hans
 
-# 安装字体
+# 安装基本字体
 RUN apt-get -qqy --no-install-recommends install \
     fonts-ipafont-gothic \
     xfonts-100dpi \
     xfonts-75dpi \
     xfonts-cyrillic \
     xfonts-scalable
+
+# 安装文泉驿微米黑字体
+RUN apt-get -qqy install ttf-wqy-microhei \
+  && ln /etc/fonts/conf.d/65-wqy-microhei.conf /etc/fonts/conf.d/69-language-selector-zh-cn.conf
 
 # 删除apt-get包列表
 RUN rm -rf /var/lib/apt/lists/*

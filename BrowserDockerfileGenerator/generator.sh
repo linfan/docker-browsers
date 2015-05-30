@@ -12,7 +12,7 @@ function generateEntrypointScript()
 
 function generateFirefoxEntrypointScript()
 {
-    generateEntrypointScript "FirefoxBrowser" "/opt/firefox/firefox"
+    generateEntrypointScript "FirefoxBrowser" "/opt/firefox/firefox --setDefaultBrowser"
 }
 
 function generateChromeEntrypointScript()

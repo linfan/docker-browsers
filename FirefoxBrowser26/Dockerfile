@@ -9,20 +9,21 @@ RUN mkdir /pkg
 RUN BASE_DEB="http://security.ubuntu.com/ubuntu/pool/main/f/firefox/firefox_28.0+build2-0ubuntu2_amd64.deb"; \
   wget -O /pkg/base.deb ${BASE_DEB} \
   && apt-get update -qqy \
-  && dpkg -i /pkg/base.deb; apt-get --yes --fix-broken install \
+  && dpkg -i /pkg/base.deb; \
+  apt-get --yes --fix-broken install \
   && rm -rf /var/lib/apt/lists/* \
   && rm /pkg/base.deb
 
 # 安装 Firefox
 RUN FIREFOX_DEB="http://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_26.0-0ubuntu1_amd64.deb/download"; \
-  && wget -O /pkg/firefox.deb ${FIREFOX_DEB} \
+  wget -O /pkg/firefox.deb ${FIREFOX_DEB} \
   && dpkg -i /pkg/firefox.deb \
   && rm /pkg/firefox.deb
 
 
 
 # 拷贝启动脚本
-COPY firefox_entry_point.sh /opt/bin/entry_point.sh
+COPY entry_point.sh /opt/bin/entry_point.sh
 RUN chmod +x /opt/bin/entry_point.sh
 
 CMD ["/opt/bin/entry_point.sh"]

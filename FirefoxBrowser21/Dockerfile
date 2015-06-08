@@ -10,7 +10,8 @@ RUN BASE_DEB="http://security.ubuntu.com/ubuntu/pool/main/f/firefox/firefox_28.0
   wget -O /pkg/base.deb ${BASE_DEB} \
   && apt-get update -qqy \
   && dpkg -i /pkg/base.deb; \
-  apt-get --yes --fix-broken install \
+  apt-get install --yes --fix-broken \
+  && apt-get upgrade \
   && rm -rf /var/lib/apt/lists/* \
   && rm /pkg/base.deb
 

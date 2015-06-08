@@ -19,7 +19,7 @@ SERVICE_URL="https://api.alauda.cn/v1/services/${NAME_SPACE}"
 function isBrowserSupported()
 {
     RES=$(echo "${SUPPORTED_BROWSER}" | grep "\b${BROWSER}-${VERSION}\b")
-    if [ "${RES}" != "" ]; then
+    if [[ "${BROWSER}" != "" && "${VERSION}" != "" && "${RES}" != "" ]]; then
         echo "TRUE"
     else
         echo "FALSE"

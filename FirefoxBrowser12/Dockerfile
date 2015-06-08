@@ -11,7 +11,7 @@ RUN BASE_DEB="http://security.ubuntu.com/ubuntu/pool/main/f/firefox/firefox_20.0
   && apt-get update -qqy \
   && dpkg -i /pkg/base.deb; \
   apt-get install --yes --fix-broken \
-  && apt-get upgrade \
+  && apt-get upgrade --yes \
   && rm -rf /var/lib/apt/lists/* \
   && rm /pkg/base.deb
 

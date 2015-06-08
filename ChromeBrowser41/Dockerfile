@@ -14,7 +14,7 @@ RUN  BROWSER_DEB="http://google-chrome.en.uptodown.com/ubuntu/download/113089"; 
 RUN apt-get update -qqy \
   && dpkg -i /pkg/google-chrome.deb; \
   apt-get install --yes --fix-broken \
-  && apt-get upgrade \
+  && apt-get upgrade --yes \
   && rm -rf /var/lib/apt/lists/* \
   && rm /pkg/google-chrome.deb
 

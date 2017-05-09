@@ -8,7 +8,7 @@ TOKEN="${ALAUDA_TOKEN}"
 BROWSER=${1}
 VERSION=${2}
 
-SUPPORTED_BROWSER="chrome-42 chrome-41 firefox-38 firefox-37 firefox-36 firefox-35 firefox-34 firefox-33 firefox-32 firefox-31 firefox-30 firefox-29 firefox-28 firefox-27 firefox-26 firefox-25 firefox-24 firefox-23 firefox-22 firefox-21 firefox-20 firefox-19 firefox-18 firefox-17 firefox-16 firefox-15 firefox-14"
+SUPPORTED_BROWSER="chrome-42 chrome-41 chrome-40 firefox-38 firefox-37 firefox-36"
 TIME=$(date +%Y%m%d%H%M%S)
 APP_NAME="${BROWSER}-v${VERSION}-${TIME}"
 HEADER_TYPE="Content-Type: application/json"
